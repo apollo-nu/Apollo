@@ -2,25 +2,17 @@ const express = require("express");
 const app = express();
 
 const url = require("url");
-const proxy = require("http-proxy");
-const apiProxy = proxy.createProxyServer();
+const proxy = require("express-http-proxy");
 
-app.use("/api", (req, res) => {
-    req.url = req.originalUrl;
-    apiProxy.web(req, res, {
-        target: {
-            host: "https://apollo-nu-server.herokuapp.com"
-        }
-    })
+const apiProxy = proxy("https://apollo-nu-server.herokuapp.com", {
+    proxyReqPathResolver: req => url.parse(req.originalUrl).path
 });
 
-app.use("/", (req, res) => {
-    req.url = req.originalUrl;
-    apiProxy.web(req, res, {
-        target: {
-            host: "https://apollo-nu.herokuapp.com"
-        }
-    })
+const clientProxy = proxy("https://apollo-nu.herokuapp.com", {
+    proxyReqPathResolver: req => url.parse(req.originalUrl).path
 });
+
+app.use("/api/*", apiProxy);
+app.use("/*", clientProxy);
 
 app.listen(process.env.PORT || 9000);
