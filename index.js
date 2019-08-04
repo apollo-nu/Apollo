@@ -8,7 +8,7 @@ const apiProxy = proxy("https://apollo-nu-server.herokuapp.com", {
     proxyReqPathResolver: req => url.parse(req.originalUrl).path.slice(4) // Removes /api at head of path
 });
 
-const clientProxy = proxy("https://apollo-nu.herokuapp.com", {
+const clientProxy = proxy("https://apollo-nu-client.herokuapp.com", {
     proxyReqPathResolver: req => url.parse(req.originalUrl).path
 });
 
