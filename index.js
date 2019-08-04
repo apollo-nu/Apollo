@@ -9,10 +9,10 @@ const apiProxy = proxy("https://apollo-nu-server.herokuapp.com", {
 });
 
 const clientProxy = proxy("https://apollo-nu.herokuapp.com", {
-    proxyReqPathResolver: req => url.parse(req.originalUrl).path.slice(7) // Removes /client at head of path
+    proxyReqPathResolver: req => url.parse(req.originalUrl).path
 });
 
 app.use("/api/*", apiProxy);
-app.use("/client/*", clientProxy);
+app.use("/*", clientProxy);
 
 app.listen(process.env.PORT || 9000);
