@@ -5,7 +5,10 @@ const url = require("url");
 const proxy = require("express-http-proxy");
 
 const apiProxy = proxy("https://apollo-nu-server.herokuapp.com", {
-    proxyReqPathResolver: req => url.parse(req.originalUrl).path
+    proxyReqPathResolver: req => {
+        console.log(url.parse(req.originalUrl).path);
+        return url.parse(req.originalUrl).path;
+    }
 });
 
 const clientProxy = proxy("https://apollo-nu.herokuapp.com", {
