@@ -1,24 +1,16 @@
 const express = require("express");
 const app = express();
 
-const url = require("url");
-const proxy = require("express-http-proxy");
+const proxy = require("http-proxy-middleware");
 
-const apiProxy = proxy("https://apollo-nu-server.herokuapp.com", {
-    proxyReqPathResolver: req => {
-        delete req.headers.host;
-        return url.parse(req.originalUrl).path;
-    }
-});
+app.use("/api", proxy({
+    target: "http://apollo-nu-server.herokuapp.com",
+    changeOrigin: true
+}));
 
-const clientProxy = proxy("https://apollo-nu.herokuapp.com", {
-    proxyReqPathResolver: req => {
-        delete req.headers.host;
-        return url.parse(req.originalUrl).path;
-    }
-});
-
-app.use("/api/*", apiProxy);
-app.use("/client/*", clientProxy);
+app.use("/", proxy({
+    target: "http://apollo-nu.herokuapp.com",
+    changeOrigin: true
+}));
 
 app.listen(process.env.PORT || 9000);
