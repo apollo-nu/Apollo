@@ -13,6 +13,6 @@ const clientProxy = proxy("https://apollo-nu.herokuapp.com", {
 });
 
 app.use("/api/*", apiProxy);
-app.use("/*", clientProxy);
+app.use("/client/*", clientProxy);
 
 app.listen(process.env.PORT || 9000);
