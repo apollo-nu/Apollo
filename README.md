@@ -1,6 +1,6 @@
 # Apollo
 
-## An easy-to-use, interactive tool for Northwestern students to plan their courses.
+### An easy-to-use, interactive tool for Northwestern students to plan their courses.
 
 Apollo is a web application designed to give Northwestern students an easier alternative to managing their four-year (or more) plans. Using the Northwestern Course API, Apollo exposes a clean interface where students can easily organize their courses in a draggable, grid-arranged fashion.
 
